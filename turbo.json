@@ -1,20 +1,24 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalEnv": [
+    "DATABASE_URL",
+    "DATABASE_POOL_MAX",
+    "BETTER_AUTH_SECRET",
+    "BETTER_AUTH_URL",
+    "VITE_APP_TITLE"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".output/**"]
     },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "format": {
-      "dependsOn": ["^format"]
-    },
     "typecheck": {
       "dependsOn": ["^typecheck"]
+    },
+    "generate": {
+      "cache": false
     },
     "dev": {
       "cache": false,

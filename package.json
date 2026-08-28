@@ -3,26 +3,33 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "turbo format",
-    "typecheck": "turbo typecheck"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "start": "pnpm --filter web start",
+    "check": "biome check . && turbo run typecheck",
+    "check:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "typecheck": "turbo run typecheck",
+    "generate": "turbo run generate",
+    "auth:generate": "pnpm --filter web auth:generate && biome check --write packages/db/src/schema/auth.ts",
+    "auth:secret": "pnpm --filter web auth:secret",
+    "db:generate": "pnpm --filter @workspace/db db:generate",
+    "db:migrate": "pnpm --filter @workspace/db db:migrate",
+    "db:push": "pnpm --filter @workspace/db db:push",
+    "db:pull": "pnpm --filter @workspace/db db:pull",
+    "db:studio": "pnpm --filter @workspace/db db:studio",
+    "db:up": "docker compose --project-directory . --env-file apps/web/.env.local -f docker/compose.yaml up -d --wait db",
+    "db:down": "docker compose --project-directory . -f docker/compose.yaml down",
+    "db:logs": "docker compose --project-directory . -f docker/compose.yaml logs -f db"
   },
   "devDependencies": {
-    "prettier": "^3.8.3",
-    "prettier-plugin-tailwindcss": "^0.8.0",
-    "turbo": "^2.9.18",
-    "typescript": "^6"
+    "@biomejs/biome": "2.4.5",
+    "turbo": "^2.10.12",
+    "typescript": "catalog:"
   },
-  "packageManager": "pnpm@10.33.4",
+  "packageManager": "pnpm@11.22.0",
   "engines": {
-    "node": ">=20"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "lightningcss"
-    ]
+    "node": ">=22.12"
   }
 }
